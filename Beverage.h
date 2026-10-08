@@ -20,7 +20,7 @@ public:
     );
 
     void setSize(string size);
-    void sethotOrIced(string temperature);
+    void sethotOrIced(string hotOrIced);
     // void setSugarLevel(string sugarLevel);
     // void setIceLevel(string iceLevel);
 

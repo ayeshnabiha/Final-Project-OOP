@@ -7,12 +7,7 @@ class Food : public MenuItem {
 
 public:
 
-    Food(
-        int id,
-        string name,
-        string category,
-        double basePrice
-    );
+    Food(int id, string name, string category, double basePrice);
 
     double calculatePrice() const override;
 

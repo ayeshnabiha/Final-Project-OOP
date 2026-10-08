@@ -13,12 +13,12 @@ Beverage::Beverage(int id, string name, string category, double basePrice)
     // iceLevel = "Normal";
 }
 
-void Beverage::setSize(string size) {
-    this->size = size;
+void Beverage::setSize(string s) {
+    size = s;
 }
 
-void Beverage::sethotOrIced(string hotOrIced) {
-    this->hotOrIced = hotOrIced;
+void Beverage::sethotOrIced(string hoi) {
+    hotOrIced = hoi;
 }
 
 // void Beverage::setSugarLevel(string sugarLevel) {

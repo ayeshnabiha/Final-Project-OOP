@@ -6,11 +6,6 @@
 #include "Food.h"
 #include "Order.h"
 
-#include <vector>
-#include <string>
-
-using namespace std;
-
 class Cashier {
 private:
     string name;

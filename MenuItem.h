@@ -2,7 +2,6 @@
 #define MENUITEM_H
 
 #include <string>
-
 using namespace std;
 
 class MenuItem {
@@ -19,10 +18,10 @@ public:
 
     int getId() const;
     string getName() const;
-    string getCategory() const;
+    string getCategory() const; //coffee non-coffee savory sweet
     double getBasePrice() const;
 
-    virtual double calculatePrice() const;
+    virtual double calculatePrice() const; //for bev size pricing
     virtual void display() const;
 };
 

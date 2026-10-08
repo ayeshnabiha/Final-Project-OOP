@@ -2,34 +2,30 @@
 
 #include <iostream>
 #include <iomanip>
+#include <string>
 
 using namespace std;
 
-Cashier::Cashier(string name) {
-
-    this->name = name;
+Cashier::Cashier(string n) {
+    name = n;
 }
 
 Cashier::~Cashier() {
-
     for (auto item : menu) {
         delete item;
     }
 }
 
 void Cashier::addMenuItem (MenuItem* item) {
-
     menu.push_back(item);
 }
 
 void Cashier::showMainMenu() {
 
     cout << "\n";
-    cout << "====================================\n";
-    cout << "             FOYE JAKAL             \n";
-    cout << "           COFFEE SHOP POS          \n";
-    cout << "====================================\n";
-
+    cout << string(30,'=') << endl;
+    cout << string(10, ' ') << "FOYE JAKAL" << string(10, ' ') << endl;
+    cout << string(30,'=') << endl;
     cout << "Cashier: "
          << name
          << "\n\n";
@@ -64,9 +60,9 @@ void Cashier::start() {
         case 3:
             checkout(currentOrder);
 
-            if (currentOrder.getStatus() == "PAID") {
-                currentOrder = Order();
-            }
+            // if (currentOrder.getStatus() == "PAID") {
+            //     currentOrder = Order();
+            // }
             break;
 
         case 0:
@@ -201,40 +197,27 @@ void Cashier::chooseBeverage(Order& order) {
             return;
         }
 
-        Beverage* selected =
-            nullptr;
+        Beverage* selected = nullptr;
 
         for (auto item : menu) {
-
             if (
                 item->getId() == id
             ) {
-
                 selected =
                     dynamic_cast<Beverage*>(item);
-
                 break;
             }
         }
 
         if (selected == nullptr) {
-
             cout << "\nInvalid beverage ID.\n";
-
             continue;
         }
 
-        // Create a copy so customization
-        // doesn't modify the original menu item
         Beverage* customized =
             new Beverage(*selected);
 
-        customizeBeverage(
-            customized,
-            order
-        );
-
-        delete customized;
+        customizeBeverage(customized, order);
 
         return;
     }
@@ -546,9 +529,7 @@ void Cashier::showCart(Order& order) {
 
         order.getCart().showCart();
 
-        if (
-            order.getCart().isEmpty()
-        ) {
+        if (order.getCart().isEmpty()) {
 
             cout << "\n0. Back\n";
 
