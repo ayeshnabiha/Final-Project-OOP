@@ -12,10 +12,14 @@ class Product{
     string name;
     double price;
     int stock;
-    string description;
 
     public:
     
+    Product(int id, string name, double price, int stock)
+        : id(id), name(name), price(price), stock(stock){}
+
+    //virtual ~Product(){}
+
     //getter
     int getID() const {return id;}
     string getName() const {return name;}
@@ -40,15 +44,9 @@ class Product{
         return false; 
     }
 
-    virtual void showProduct const (){
+    virtual void showProduct() const {
         cout << "[" << id << "] " << name << " - Rp" << fixed << setprecision(0) << price << endl;
-        cout << "    Desc: " << description << " | Stock: " << stock << endl;
-    }
-    
-    //constructor
-    Product(int id, string name, double price, int stock, string description)
-    : id(id), name(name), price(price), stock(stock), description(description){
-        description = "Delicious";
+        cout << " | Stock: " << stock << endl;
     }
 };
 
@@ -57,36 +55,34 @@ class FoodProduct : public Product{
     bool isWarmed;
 
     public:
-    FoodProduct(int id, string name, double price, int stock, string description, bool isWarmed)
-    : Product(id, name, price, stock, description), isWarmed(isWarmed) {
-        isWarmed = true
+    FoodProduct(int id, string name, double price, int stock, bool isWarmed)
+    : Product(id, name, price, stock), isWarmed(isWarmed) {
+        isWarmed = true;
     }
     void showProduct() const override {
         cout << "[FOOD #" << id << "] " << name << " - Rp" << fixed << setprecision(0) << price << endl;
-        cout << "    Desc: " << description << endl;
-        cout << "    Served: " << (isWarmed ? "Warmed Up" : "Room Temperature") << " | Stock: " << stock << endl;
+        cout << "Served: " << (isWarmed ? "Warmed Up" : "Room Temperature") << " | Stock: " << stock << endl;
     }
 };
 
 class BeverageProduct : public Product{
     private: 
     string cupSize;
-    string drinkTemp;
+    string hotOrIced;
 
     public:
-    BeverageProduct(int id, string name, double price, int stock, string description, string size, string temp)
-    : Product(id, name, price, stock, description), cupSize(size), drinkTemp(temp) {
+    BeverageProduct(int id, string name, double price, int stock, string size, string temp)
+    : Product(id, name, price, stock), cupSize(size), hotOrIced(temp) {
     }    
 };
 
 void showMain(){
     int choice;
     cout << string(10,'=') << "WELCOME TO FORE, JAKAL" << string(10,'=') << endl;
-    cout << "1. SHOW MENU" << endl;
-    // cout << "CHOOSE MENU" << endl;
-    // cout << "SHOW CART" << endl;
-    // cout << "CHECK OUT" << endl;
-    // cout << "OUT" << endl;
+    cout << "CHOOSE MENU" << endl;
+    cout << "SHOW CART" << endl;
+    cout << "CHECK OUT" << endl;
+    cout << "OUT" << endl;
     cout << "What do you want to do? ";
 }
 
@@ -98,11 +94,11 @@ class Order{};
 int main(){
 
     vector<Product*> menu;
-    menu.push_back(new BeverageProduct(101, "Butterscotch Sea Salt Latte", 29000, 20, "Espresso with sweet butterscotch and salty cream", "Regular", "Iced"));
-    menu.push_back(new BeverageProduct(102, "Pandan Latte", 28000, 15, "Espresso blended with fragrant pandan flavor", "Regular", "Iced"));
-    menu.push_back(new BeverageProduct(103, "Americano", 21000, 30, "Double shot espresso with warm/iced water", "Regular", "Hot"));
-    menu.push_back(new FoodProduct(201, "Beef Egg & Cheese Toast", 35000, 10, "Toasted brioche with savory beef slice and egg", true));
-    menu.push_back(new FoodProduct(202, "Butter Croissant", 22000, 12, "Flaky french butter croissant", true));
+    menu.push_back(new BeverageProduct(101, "Butterscotch Sea Salt Latte", 29000, 20, "Regular", "Iced"));
+    menu.push_back(new BeverageProduct(102, "Pandan Latte", 28000, 15, "Regular", "Iced"));
+    menu.push_back(new BeverageProduct(103, "Americano", 21000, 30, "Regular", "Hot"));
+    menu.push_back(new FoodProduct(201, "Beef Egg & Cheese Toast", 35000, 10, true));
+    menu.push_back(new FoodProduct(202, "Butter Croissant", 22000, 12, true));
 
     int choice;
     do {
