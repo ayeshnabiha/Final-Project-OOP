@@ -8,8 +8,8 @@ class Beverage : public MenuItem {
 private:
     string size;
     string hotOrIced;
-    // string sugarLevel;
-    // string iceLevel;
+    string sugarLevel;
+    string iceLevel;
 
 public:
     Beverage(
@@ -21,13 +21,13 @@ public:
 
     void setSize(string size);
     void sethotOrIced(string hotOrIced);
-    // void setSugarLevel(string sugarLevel);
-    // void setIceLevel(string iceLevel);
+    void setSugarLevel(string sugarLevel);
+    void setIceLevel(string iceLevel);
 
     string getSize() const;
     string gethotOrIced() const;
-    // string getSugarLevel() const;
-    // string getIceLevel() const;
+    string getSugarLevel() const;
+    string getIceLevel() const;
 
     double calculatePrice() const override;
 

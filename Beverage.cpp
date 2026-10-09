@@ -9,8 +9,8 @@ Beverage::Beverage(int id, string name, string category, double basePrice)
 {
     size = "Regular";
     hotOrIced = "Iced";
-    // sugarLevel = "Normal";
-    // iceLevel = "Normal";
+    sugarLevel = "Normal";
+    iceLevel = "Normal";
 }
 
 void Beverage::setSize(string s) {
@@ -21,39 +21,29 @@ void Beverage::sethotOrIced(string hoi) {
     hotOrIced = hoi;
 }
 
-// void Beverage::setSugarLevel(string sugarLevel) {
-//     this->sugarLevel = sugarLevel;
-// }
+void Beverage::setSugarLevel(string sl) {
+    sugarLevel = sl;
+}
 
-// void Beverage::setIceLevel(string iceLevel) {
-//     this->iceLevel = iceLevel;
-// }
+void Beverage::setIceLevel(string il) {
+    iceLevel = il;
+}
 
 string Beverage::getSize() const {return size;}
 
 string Beverage::gethotOrIced() const {return hotOrIced;}
 
-// string Beverage::getSugarLevel() const {
-//     return sugarLevel;
-// }
+string Beverage::getSugarLevel() const {return sugarLevel;}
 
-// string Beverage::getIceLevel() const {
-//     return iceLevel;
-// }
+string Beverage::getIceLevel() const {return iceLevel;}
 
 double Beverage::calculatePrice() const {
-
     double total = basePrice;
-
-    if (size == "Large") {
-        total += 5000;
-    }
-
+    if (size == "Large") {total += 5000;}
     return total;
 }
 
 void Beverage::display() const {
-
     cout << left
          << setw(4) << id
          << setw(25) << name

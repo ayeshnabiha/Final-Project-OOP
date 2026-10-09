@@ -6,15 +6,12 @@
 
 using namespace std;
 
-Cashier::Cashier(string n) {
-    name = n;
-}
+Cashier::Cashier(string n) : name(n) {}
 
 Cashier::~Cashier() {
-    for (auto item : menu) {
-        delete item;
-    }
+    for (auto item : menu) {delete item;}
 }
+
 
 void Cashier::addMenuItem (MenuItem* item) {
     menu.push_back(item);
@@ -23,12 +20,10 @@ void Cashier::addMenuItem (MenuItem* item) {
 void Cashier::showMainMenu() {
 
     cout << "\n";
-    cout << string(30,'=') << endl;
-    cout << string(10, ' ') << "FOYE JAKAL" << string(10, ' ') << endl;
-    cout << string(30,'=') << endl;
-    cout << "Cashier: "
-         << name
-         << "\n\n";
+    cout << string(35,'=') << endl;
+    cout << string(12, ' ') << "FOYE JAKAL" << endl;
+    cout << string(35,'=') << endl;
+    cout << "Cashier: " << name << "\n\n";
 
     cout << "1. Choose Menu\n";
     cout << "2. Show Cart\n";
@@ -60,17 +55,11 @@ void Cashier::start() {
         case 3:
             checkout(currentOrder);
 
-            // if (currentOrder.getStatus() == "PAID") {
-            //     currentOrder = Order();
-            // }
+            if (currentOrder.getStatus() == "PAID") {currentOrder = Order();}
             break;
 
         case 0:
-            cout << "\n";
-            cout << "Thank you, "
-                 << name
-                 << ". Goodbye!\n";
-
+            cout << "\nThank you, " << name << ". Goodbye!\n";
             running = false;
             break;
 
@@ -86,7 +75,7 @@ void Cashier::showMenu() {
 
     do {
         cout << "\n";
-        cout << "========== MENU ==========\n";
+        cout << string(10,'=') << " MENU " << string(10, '=') << endl;
         cout << "1. Beverage\n";
         cout << "2. Food\n";
         cout << "0. Back\n";
@@ -117,30 +106,18 @@ void Cashier::showMenu() {
 void Cashier::showBeverageMenu() {
 
     cout << "\n";
-    cout << "========== BEVERAGE ==========\n";
+    cout << string(10,'=') << " BEVERAGE " << string(10, '=') << endl;
 
-    cout << "\n---------- COFFEE ----------\n";
-
+    cout << "\n----------- COFFEE -----------\n";
     for (auto item : menu) {
-
-        if (
-            item->getCategory()
-            == "Coffee"
-        ) {
-
+        if (item->getCategory() == "Coffee") {
             item->display();
         }
     }
 
-    cout << "\n------- NON-COFFEE --------\n";
-
+    cout << "\n--------- NON-COFFEE ----------\n";
     for (auto item : menu) {
-
-        if (
-            item->getCategory()
-            == "Non-Coffee"
-        ) {
-
+        if (item->getCategory() == "Non-Coffee") {
             item->display();
         }
     }
@@ -151,30 +128,22 @@ void Cashier::showBeverageMenu() {
 void Cashier::showFoodMenu() {
 
     cout << "\n";
-    cout << "============ FOOD ============\n";
+    cout << string(12,'=') << " FOOD " << string(12, '=') << endl;
 
-    cout << "\n---------- SAVORY ----------\n";
-
+    cout << "\n----------- SAVORY -----------\n";
     for (auto item : menu) {
-
         if (
-            item->getCategory()
-            == "Savory"
+            item->getCategory() == "Savory"
         ) {
-
             item->display();
         }
     }
 
-    cout << "\n----------- SWEET -----------\n";
-
+    cout << "\n------------ SWEET ------------\n";
     for (auto item : menu) {
-
         if (
-            item->getCategory()
-            == "Sweet"
+            item->getCategory() == "Sweet"
         ) {
-
             item->display();
         }
     }
@@ -193,18 +162,13 @@ void Cashier::chooseBeverage(Order& order) {
         cout << "\nChoose menu ID: ";
         cin >> id;
 
-        if (id == 0) {
-            return;
-        }
+        if (id == 0) {return;}
 
         Beverage* selected = nullptr;
 
         for (auto item : menu) {
-            if (
-                item->getId() == id
-            ) {
-                selected =
-                    dynamic_cast<Beverage*>(item);
+            if (item->getId() == id) {
+                selected = dynamic_cast<Beverage*>(item);
                 break;
             }
         }
@@ -214,9 +178,7 @@ void Cashier::chooseBeverage(Order& order) {
             continue;
         }
 
-        Beverage* customized =
-            new Beverage(*selected);
-
+        Beverage* customized = new Beverage(*selected);
         customizeBeverage(customized, order);
 
         return;
@@ -234,29 +196,20 @@ void Cashier::chooseFood(Order& order) {
         cout << "\nChoose menu ID: ";
         cin >> id;
 
-        if (id == 0) {
-            return;
-        }
+        if (id == 0) {return;}
 
         Food* selected = nullptr;
 
         for (auto item : menu) {
 
-            if (
-                item->getId() == id
-            ) {
-
-                selected =
-                    dynamic_cast<Food*>(item);
-
+            if (item->getId() == id) {
+                selected = dynamic_cast<Food*>(item);
                 break;
             }
         }
 
         if (selected == nullptr) {
-
             cout << "\nInvalid food ID.\n";
-
             continue;
         }
 
@@ -266,19 +219,15 @@ void Cashier::chooseFood(Order& order) {
         cin >> quantity;
 
         while (quantity <= 0) {
-
-            cout << "Quantity must be > 0: ";
-
+            cout << "Quantity must NOT be less than zero: ";
             cin >> quantity;
         }
 
         order.getCart().addItem(
-            selected,
-            quantity
+            selected, quantity
         );
 
-        cout << "\n";
-        cout << "Item added to cart!\n";
+        cout << "\nItem added to cart!\n";
 
         return;
     }
@@ -292,33 +241,21 @@ void Cashier::customizeBeverage(Beverage* beverage, Order& order) {
     while (true) {
 
         cout << "\n========== SIZE ==========\n";
-
         cout << "1. Regular\n";
         cout << "2. Large (+Rp5.000)\n";
         cout << "0. Back\n";
-
         cout << "\nChoose: ";
         cin >> choice;
 
-        if (choice == 0) {
-            return;
-        }
+        if (choice == 0) {return;}
 
         if (choice == 1) {
-
-            beverage->setSize(
-                "Regular"
-            );
-
+            beverage->setSize("Regular");
             break;
         }
 
         if (choice == 2) {
-
-            beverage->setSize(
-                "Large"
-            );
-
+            beverage->setSize("Large");
             break;
         }
 
@@ -329,11 +266,9 @@ void Cashier::customizeBeverage(Beverage* beverage, Order& order) {
     while (true) {
 
         cout << "\n======= TEMPERATURE =======\n";
-
         cout << "1. Hot\n";
         cout << "2. Iced\n";
         cout << "0. Back\n";
-
         cout << "\nChoose: ";
         cin >> choice;
 
@@ -342,20 +277,12 @@ void Cashier::customizeBeverage(Beverage* beverage, Order& order) {
         }
 
         if (choice == 1) {
-
-            beverage->sethotOrIced(
-                "Hot"
-            );
-
+            beverage->sethotOrIced("Hot");
             break;
         }
 
         if (choice == 2) {
-
-            beverage->sethotOrIced(
-                "Iced"
-            );
-
+            beverage->sethotOrIced("Iced");
             break;
         }
 
@@ -363,145 +290,90 @@ void Cashier::customizeBeverage(Beverage* beverage, Order& order) {
     }
 
     // SUGAR
-    // while (true) {
+    while (true) {
 
-    //     cout << "\n========= SUGAR =========\n";
+        cout << "\n========= SUGAR LEVEL =========\n";
+        cout << "1. No Sugar\n";
+        cout << "2. Less Sugar\n";
+        cout << "3. Normal\n";
+        cout << "4. Extra Sugar\n";
+        cout << "0. Back\n";
+        cout << "\nChoose: ";
+        cin >> choice;
 
-    //     cout << "1. No Sugar\n";
-    //     cout << "2. Less Sugar\n";
-    //     cout << "3. Normal\n";
-    //     cout << "4. Extra Sugar\n";
-    //     cout << "0. Back\n";
+        if (choice == 0) {return;}
 
-    //     cout << "\nChoose: ";
-    //     cin >> choice;
+        if (choice == 1) {
+            beverage->setSugarLevel("No Sugar");
+            break;
+        }
 
-    //     if (choice == 0) {
-    //         return;
-    //     }
+        if (choice == 2) {
+            beverage->setSugarLevel("Less Sugar");
+            break;
+        }
 
-    //     if (choice == 1) {
+        if (choice == 3) {
+            beverage->setSugarLevel("Normal");
+            break;
+        }
 
-    //         beverage->setSugarLevel(
-    //             "No Sugar"
-    //         );
+        if (choice == 4) {
+            beverage->setSugarLevel("Extra Sugar");
+            break;
+        }
 
-    //         break;
-    //     }
-
-    //     if (choice == 2) {
-
-    //         beverage->setSugarLevel(
-    //             "Less Sugar"
-    //         );
-
-    //         break;
-    //     }
-
-    //     if (choice == 3) {
-
-    //         beverage->setSugarLevel(
-    //             "Normal"
-    //         );
-
-    //         break;
-    //     }
-
-    //     if (choice == 4) {
-
-    //         beverage->setSugarLevel(
-    //             "Extra Sugar"
-    //         );
-
-    //         break;
-    //     }
-
-    //     cout << "Invalid choice.\n";
-    // }
+        cout << "Invalid choice.\n";
+    }
 
     // ICE
-    // while (true) {
+    while (true) {
 
-    //     cout << "\n========== ICE ==========\n";
+        cout << "\n========== ICE LEVEL ==========\n";
 
-    //     cout << "1. No Ice\n";
-    //     cout << "2. Less Ice\n";
-    //     cout << "3. Normal\n";
-    //     cout << "4. Extra Ice\n";
-    //     cout << "0. Back\n";
+        cout << "1. No Ice\n";
+        cout << "2. Less Ice\n";
+        cout << "3. Normal\n";
+        cout << "4. Extra Ice\n";
+        cout << "0. Back\n";
 
-    //     cout << "\nChoose: ";
-    //     cin >> choice;
+        cout << "\nChoose: ";
+        cin >> choice;
 
-    //     if (choice == 0) {
-    //         return;
-    //     }
+        if (choice == 0) {return;}
 
-    //     if (choice == 1) {
+        if (choice == 1) {
+            beverage->setIceLevel("No Ice");
+            break;
+        }
 
-    //         beverage->setIceLevel(
-    //             "No Ice"
-    //         );
+        if (choice == 2) {
+            beverage->setIceLevel("Less Ice");
+            break;
+        }
 
-    //         break;
-    //     }
+        if (choice == 3) {
+            beverage->setIceLevel("Normal");
+            break;
+        }
 
-    //     if (choice == 2) {
+        if (choice == 4) {
+            beverage->setIceLevel("Extra Ice");
+            break;
+        }
 
-    //         beverage->setIceLevel(
-    //             "Less Ice"
-    //         );
-
-    //         break;
-    //     }
-
-    //     if (choice == 3) {
-
-    //         beverage->setIceLevel(
-    //             "Normal"
-    //         );
-
-    //         break;
-    //     }
-
-    //     if (choice == 4) {
-
-    //         beverage->setIceLevel(
-    //             "Extra Ice"
-    //         );
-
-    //         break;
-    //     }
-
-    //     cout << "Invalid choice.\n";
-    // }
+        cout << "Invalid choice.\n";
+    }
 
     cout << "\n";
     cout << "========== ITEM ==========\n";
 
-    cout << beverage->getName()
-         << "\n";
-
-    cout << "Size : "
-         << beverage->getSize()
-         << "\n";
-
-    cout << "Temp : "
-         << beverage->gethotOrIced()
-         << "\n";
-
-    // cout << "Sugar: "
-    //      << beverage->getSugarLevel()
-    //      << "\n";
-
-    // cout << "Ice  : "
-    //      << beverage->getIceLevel()
-    //      << "\n";
-
-    cout << "Price: Rp "
-         << fixed << setprecision(0)
-         << beverage->calculatePrice()
-         << "\n";
+    cout << beverage->getName() << "\n";
+    cout << "Size : " << beverage->getSize() << "\n";
+    cout << "Temp : " << beverage->gethotOrIced() << "\n";
+    cout << "Sugar: " << beverage->getSugarLevel() << "\n";
+    cout << "Ice  : " << beverage->getIceLevel() << "\n";
+    cout << "Price: Rp " << fixed << setprecision(0) << beverage->calculatePrice() << "\n";
 
     int quantity;
 
@@ -509,18 +381,13 @@ void Cashier::customizeBeverage(Beverage* beverage, Order& order) {
     cin >> quantity;
 
     while (quantity <= 0) {
-
-        cout << "Quantity must be > 0: ";
+        cout << "Quantity must NOT be less than 0: ";
         cin >> quantity;
     }
 
-    order.getCart().addItem(
-        beverage,
-        quantity
-    );
+    order.getCart().addItem(beverage, quantity);
 
-    cout << "\n";
-    cout << "Item added to cart!\n";
+    cout << "\nItem added to cart!\n";
 }
 
 void Cashier::showCart(Order& order) {
@@ -567,7 +434,7 @@ void Cashier::showCart(Order& order) {
             cout << "\nItem removed.\n";
         }
 
-        // CHANGE QUANTITY
+        // CHANGE 
         else if (choice == 2) {
 
             int index;
@@ -582,9 +449,7 @@ void Cashier::showCart(Order& order) {
                 );
 
             if (item == nullptr) {
-
                 cout << "Invalid item.\n";
-
                 continue;
             }
 
@@ -592,15 +457,11 @@ void Cashier::showCart(Order& order) {
             cin >> quantity;
 
             if (quantity <= 0) {
-
                 cout << "Invalid quantity.\n";
-
                 continue;
             }
 
-            item->setQuantity(
-                quantity
-            );
+            item->setQuantity(quantity);
 
             cout << "\nQuantity updated.\n";
         }
@@ -614,7 +475,6 @@ void Cashier::showCart(Order& order) {
         }
 
         else {
-
             cout << "\nInvalid choice.\n";
         }
     }
@@ -622,13 +482,8 @@ void Cashier::showCart(Order& order) {
 
 void Cashier::checkout(Order& order) {
 
-    if (
-        order.getCart().isEmpty()
-    ) {
-
-        cout << "\n";
-        cout << "Your cart is empty.\n";
-
+    if (order.getCart().isEmpty()) {
+        cout << "\nYour cart is empty.\n";
         return;
     }
 
@@ -637,53 +492,32 @@ void Cashier::checkout(Order& order) {
     string customerName;
 
     cout << "\n========== CHECKOUT ==========\n";
-
     cout << "Customer name: ";
 
-    getline(
-        cin,
-        customerName
-    );
+    getline(cin, customerName);
+    Customer customer(customerName);
 
-    Customer customer(
-        customerName
-    );
-
-    order.setCustomer(
-        customer
-    );
+    order.setCustomer(customer);
 
     cout << "\n";
     cout << "========== ORDER ==========\n";
-
-    cout << "Order ID : #"
-         << order.getOrderId()
-         << "\n";
-
-    cout << "Customer : "
-         << order.getCustomer().getName()
-         << "\n";
+    cout << "Order ID : #" << order.getOrderId() << "\n";
+    cout << "Customer : " << order.getCustomer().getName() << "\n";
 
     order.getCart().showCart();
 
     int confirm;
 
     cout << "\nConfirm order?\n";
-
     cout << "1. Confirm\n";
     cout << "0. Back\n";
-
     cout << "\nChoose: ";
     cin >> confirm;
 
-    if (confirm == 0) {
-        return;
-    }
+    if (confirm == 0) {return;}
 
     if (confirm != 1) {
-
         cout << "Invalid choice.\n";
-
         return;
     }
 
@@ -691,9 +525,7 @@ void Cashier::checkout(Order& order) {
         order.processPayment();
 
     if (!success) {
-
         cout << "\nPayment cancelled.\n";
-
         return;
     }
 

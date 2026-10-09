@@ -1,8 +1,14 @@
 #include "Cashier.h"
+#include <iostream>
+
+using namespace std;
 
 int main() {
 
-    Cashier cashier("Ayesha");
+    string n;
+    cout << "Cashier : ";
+    cin >> n;
+    Cashier cashier(n);
 
     // COFFEE
 
@@ -31,8 +37,8 @@ int main() {
     cashier.addMenuItem(new Food(12, "Brownies", "Sweet", 18000));
     cashier.addMenuItem(new Food(13, "Cookies", "Sweet", 15000));
 
-
-    // Start POS
+    
+    //start here
     cashier.start();
 
     return 0;
