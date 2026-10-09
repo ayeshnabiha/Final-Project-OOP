@@ -25,6 +25,8 @@ public:
 
     void removeItem(int index);
 
+    bool updateQuantity(int index, int quantity);
+
     void clearCart();
 
     CartItem* getCartItem(int index);
