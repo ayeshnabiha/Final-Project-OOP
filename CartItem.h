@@ -11,17 +11,11 @@ private:
 
 public:
     CartItem(MenuItem* item, int quantity);
-
     MenuItem* getItem() const;
-
     int getQuantity() const;
-
     void setQuantity(int quantity);
-
     void increaseQuantity(int amount);
-
     double getSubtotal() const;
-
     void display() const;
 };
 
