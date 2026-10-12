@@ -14,17 +14,11 @@ private:
     bool paid;
 
 public:
-
     Payment();
-
     bool processPayment(double total);
-
     string getMethod() const;
-
     double getAmountPaid() const;
-
     double getChange() const;
-
     bool isPaid() const;
 };
 
