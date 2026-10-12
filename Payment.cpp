@@ -78,6 +78,10 @@ bool Payment::processPayment(
         method = "QRIS";
 
         cout << "\nWaiting for QRIS payment...\n";
+        
+        cout << "\nPress ENTER after payment is confirmed...";
+        cin.ignore();
+        cin.get();
 
         cout << "Payment received.\n";
 
@@ -92,7 +96,11 @@ bool Payment::processPayment(
         method = "Debit";
 
         cout << "\nProcessing debit payment...\n";
-
+        
+        cout << "\nPress ENTER after the transaction is confirmed...";
+        cin.ignore();
+        cin.get();
+        
         cout << "Payment received.\n";
 
         amountPaid = total;

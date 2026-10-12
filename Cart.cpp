@@ -6,10 +6,20 @@
 using namespace std;
 
 void Cart::addItem(MenuItem* item, int quantity) {
+    if (item == nullptr || quantity <= 0) {
+        return;
+    }
 
-    items.push_back(
-        CartItem(item, quantity)
-    );
+    for (auto& cartItem : items) {
+        if (cartItem.getItem() == item) {
+            cartItem.setQuantity(
+                cartItem.getQuantity() + quantity
+            );
+            return;
+        }
+    }
+
+    items.push_back(CartItem(item, quantity));
 }
 
 void Cart::showCart() const {
@@ -59,16 +69,29 @@ int Cart::getItemCount() const {
     return items.size();
 }
 
-void Cart::removeItem(int index) {
+bool Cart::removeItem(int index) {
 
     if (
         index >= 0 &&
-        index < items.size()
+        index < static_cast<int>(items.size())
     ) {
         items.erase(
-            items.begin() + index
-        );
+            items.begin() + index);
+            return true;
     }
+
+    return false;
+}
+
+bool Cart::updateQuantity(int index, int quantity) {
+    if (index < 0 ||
+        index >= static_cast<int>(items.size()) ||
+        quantity <= 0) {
+        return false;
+    }
+
+    items[index].setQuantity(quantity);
+    return true;
 }
 
 void Cart::clearCart() {
@@ -79,7 +102,7 @@ CartItem* Cart::getCartItem(int index) {
 
     if (
         index >= 0 &&
-        index < items.size()
+        index < static_cast<int>(items.size())
     ) {
         return &items[index];
     }

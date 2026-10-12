@@ -23,7 +23,9 @@ public:
 
     int getItemCount() const;
 
-    void removeItem(int index);
+    bool removeItem(int index);
+
+    bool updateQuantity(int index, int quantity);
 
     void clearCart();
 
